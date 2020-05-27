@@ -38,7 +38,8 @@ public class HTTPHandleThread extends Thread {
 
             outputStream.write(new String("HTTP/1.1 " + code + " " + code_name.get(code)+"\n").getBytes());
             outputStream.write("Content-Type: text/html\n".getBytes());
-            outputStream.write(new String("Content-Length: " + content_length +"\n").getBytes());
+            outputStream.write(new String("Content-Length: " + content_length +"\r\n\r\n").getBytes());
+            System.out.println(code);
             if(file != null){
                 FileInputStream fileInputStream = new FileInputStream(file);
                 int readbytes = 0;
@@ -47,7 +48,7 @@ public class HTTPHandleThread extends Thread {
                     outputStream.write(buffer,0,readbytes);
                 }
             }
-
+            outputStream.write("\n".getBytes());
             inputStream.close();
             outputStream.close();
             socket.close();
